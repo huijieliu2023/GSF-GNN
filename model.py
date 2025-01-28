@@ -23,7 +23,7 @@ NORMALIZATION = {
     'BatchNorm': nn.BatchNorm1d
 }
 
-class MyModel(nn.Module):
+class GMP_GNN(nn.Module):
     def __init__(self, args, input_dim, hidden_dim,output_dim,hidden_dim_multiplier, num_heads,num_nodes,xx_initial, normalization, dropout,number_of_edges, num_layers):
         super(MyModel, self).__init__()
         self.args = args
@@ -32,7 +32,7 @@ class MyModel(nn.Module):
         self.input_linear = nn.Linear(in_features=input_dim, out_features=hidden_dim)
         self.residual_modules = nn.ModuleList()
         for _ in range(num_layers):
-            residual_module = ResidualModuleWrapper2(module=MaxwellDemonFilter,
+            residual_module = GMP_GNN_layer(module=GMP_GNN_layer,
                                                     normalization=normalization,
                                                     xx_initial = xx_initial,
                                                     dim=hidden_dim,

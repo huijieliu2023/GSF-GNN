@@ -9,7 +9,7 @@ import torch
 import numpy as np
 from torch.cuda.amp import autocast, GradScaler
 from GCNII import GCNII
-from model import Model, MyModel
+from model import Model, GMP_GNN
 from FAGCN import FAGCN
 from GPRGNN import GPRGNN
 from datasets import Dataset
@@ -31,7 +31,7 @@ def get_args():
 
     # model architecture
     parser.add_argument('--model', type=str, default='my_model',
-                        choices=['ResNet', 'GCN', 'SAGE', 'GATv2','GAT', 'GAT-sep', 'GT', 'GT-sep','my_model','my_model_nodes','my_model_no_node','FAGCN','GCNII','GPRGNN','LRGNN'])
+                        choices=['GMP_GNN'])
     parser.add_argument('--num_layers', type=int, default=3 )
     parser.add_argument('--hidden_dim', type=int, default=256)
     parser.add_argument('--hidden_dim_multiplier', type=float, default=1)
@@ -163,7 +163,7 @@ def main():
         l_x = l_x.unsqueeze(1).T
         dataset.node_features = torch.cat((dataset.node_features,l_x),0)
         #####
-        model = MyModel(
+        model = GMP_GNN(
             input_dim=dataset.num_node_features,
             hidden_dim=args.hidden_dim,
             output_dim=dataset.num_targets,
@@ -210,11 +210,7 @@ def main():
         model.cpu()
         dataset.next_data_split()
 
-    logger.print_metrics_summary()
-    if args.model == 'GCN':
-        tensor_filepath = "vis_GCN_roman.pt"
-    else:
-        tensor_filepath = "vis_roman.pt"   
+    logger.print_metrics_summary()  
     torch.save(logits.cpu(), tensor_filepath)
 
 if __name__ == '__main__':

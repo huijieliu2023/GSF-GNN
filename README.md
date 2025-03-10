@@ -39,33 +39,3 @@ Codes for "SAF-GMP: Structure and Feature Enhanced Global Message Passing for He
 | LRGNN          | 36.86±0.86                 | 62.29±1.33           | 36.79±0.49           | 80.00±0.00            | 78.51±0.38           | 88.26±1.02           | 89.26±0.62           |
 | **GMP-GNN**    | **37.04±0.80**             | **90.21±0.62**       | **53.72±0.41**       | **96.32±0.42**        | **85.11±0.64**       | 87.53±1.32           | **89.72±0.37**       |
 
-
-## Ablation Performance (%) of GMP-GNN on Different Datasets
-
-| **Model**         | **Actor**    | **Roman**    | **Amazon**   | **Minesweeper** | **Tolokers**  | **Cora**     | **Pubmed**   |
-|--------------------|--------------|--------------|--------------|-----------------|---------------|--------------|--------------|
-| (1) w/o GVN       | 36.12        | 89.51        | 52.71        | 95.05           | 84.51         | 86.57        | 88.80        |
-| (2) w/o GEA       | 36.80        | 89.47        | 52.82        | 95.11           | 84.14         | 86.46        | 89.12        |
-| (3) w/o m'  | 36.87        | 86.82        | 52.72        | 94.62           | 84.06         | 86.31        | 89.48        |
-| (4) w/o m'' | 36.64        | 88.53        | 53.03        | 95.40           | 83.74         | 85.71        | 88.95        |
-| (5) w/o m''' | 36.43        | 88.33        | 52.12        | 95.67           | 83.60         | 86.92        | 88.84        |
-| (6) GMP-GNN        | **37.04**   | **90.21**    | **53.72**    | **96.32**       | **85.11**     | **87.53**    | **89.72**    |
-
-
-## Node classification performances for over-smoothing problems with various depths
-<img width="847" alt="截屏2025-01-28 09 58 45" src="https://github.com/user-attachments/assets/7dedeae6-6718-40e7-a50d-872781aa04bb" />
-
-## Dirichlet Energy of 64 Layers for GloMP-GNN After Training
-
-The higher energy indicates that it is less prone to over-smoothing.
-
-| **Model**       | **Actor**   | **Minesweeper** | **Cora**    |
-|------------------|-------------|-----------------|-------------|
-| **GCN**         | 0.1633      | 0.0007          | 0.0791      |
-| **GCNII**       | 0.3155      | 0.4312          | 0.1562      |
-| **GMP-GNN**   | 0.7176      | 0.5936          | 0.2782      |
-
-
-## Comparison of GCN and GMP-GNN visualizations obtained from 64 layers of feature representations in two-dimensional space on Roman-empire dataset.
-<img width="401" alt="截屏2025-01-28 10 01 29" src="https://github.com/user-attachments/assets/8935ac75-9e27-47eb-8d8f-89b1587b823b" />
-

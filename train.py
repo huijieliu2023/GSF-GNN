@@ -9,7 +9,7 @@ import torch
 import numpy as np
 from torch.cuda.amp import autocast, GradScaler
 from GCNII import GCNII
-from model import Model, GMP_GNN
+from model import Model, SAF_GMP
 from FAGCN import FAGCN
 from GPRGNN import GPRGNN
 from datasets import Dataset
@@ -24,14 +24,12 @@ def get_args():
     parser.add_argument('--name', type=str, default=None, help='Experiment name. If None, model name is used.')
     parser.add_argument('--save_dir', type=str, default='experiments', help='Base directory for saving information.')
     parser.add_argument('--dataset', type=str, default='cora',
-                        choices=['roman-empire', 'amazon-ratings', 'minesweeper', 'tolokers', 'questions',
-                                 'squirrel', 'squirrel-directed', 'squirrel-filtered', 'squirrel-filtered-directed',
-                                 'chameleon', 'chameleon-directed', 'chameleon-filtered', 'chameleon-filtered-directed',
-                                 'actor', 'texas', 'texas-4-classes', 'cornell', 'wisconsin','cora','citeseer','pubmed'])
+                        choices=['roman-empire', 'amazon-ratings', 'minesweeper', 'tolokers',
+                                 'actor','cora','pubmed'])
 
     # model architecture
     parser.add_argument('--model', type=str, default='my_model',
-                        choices=['GMP_GNN'])
+                        choices=['SAF_GMP'])
     parser.add_argument('--num_layers', type=int, default=3 )
     parser.add_argument('--hidden_dim', type=int, default=256)
     parser.add_argument('--hidden_dim_multiplier', type=float, default=1)
@@ -163,7 +161,7 @@ def main():
         l_x = l_x.unsqueeze(1).T
         dataset.node_features = torch.cat((dataset.node_features,l_x),0)
         #####
-        model = GMP_GNN(
+        model = SAF_GMP(
             input_dim=dataset.num_node_features,
             hidden_dim=args.hidden_dim,
             output_dim=dataset.num_targets,

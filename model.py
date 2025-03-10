@@ -4,7 +4,7 @@ import dgl
 
 from modules import (ResidualModuleWrapper, FeedForwardModule, GCNModule, SAGEModule, GATModule, GATSepModule,
                      TransformerAttentionModule, TransformerAttentionSepModule)
-from modules import MaxwellDemonFilter
+from modules import SAF_GMP_layer
 
 MODULES = {
     'ResNet': [FeedForwardModule],
@@ -23,7 +23,7 @@ NORMALIZATION = {
     'BatchNorm': nn.BatchNorm1d
 }
 
-class GMP_GNN(nn.Module):
+class SAF_GMP(nn.Module):
     def __init__(self, args, input_dim, hidden_dim,output_dim,hidden_dim_multiplier, num_heads,num_nodes,xx_initial, normalization, dropout,number_of_edges, num_layers):
         super(MyModel, self).__init__()
         self.args = args
@@ -32,7 +32,7 @@ class GMP_GNN(nn.Module):
         self.input_linear = nn.Linear(in_features=input_dim, out_features=hidden_dim)
         self.residual_modules = nn.ModuleList()
         for _ in range(num_layers):
-            residual_module = GMP_GNN_layer(module=GMP_GNN_layer,
+            residual_module = GMP_GNN_layer(module=SAF_GMP_layer,
                                                     normalization=normalization,
                                                     xx_initial = xx_initial,
                                                     dim=hidden_dim,

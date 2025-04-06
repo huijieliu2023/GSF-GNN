@@ -38,9 +38,9 @@ class FeedForwardModule(nn.Module):
 
         return x
 
-class SAF_GMP_layer(nn.Module):
+class GSF_GNN_layer(nn.Module):
     def __init__(self, dim, xx_initial, hidden_dim_multiplier, num_heads,num_nodes, dropout,number_of_edges,args):
-        super(MaxwellDemonFilter, self).__init__()
+        super(GSF_GNN_layer, self).__init__()
         self.fc = nn.Linear(dim, dim)
 
         _check_dim_and_num_heads_consistency(dim, num_heads)

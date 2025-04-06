@@ -9,7 +9,7 @@ import torch
 import numpy as np
 from torch.cuda.amp import autocast, GradScaler
 from GCNII import GCNII
-from model import Model, SAF_GMP
+from model import Model, GSF_GNN
 from FAGCN import FAGCN
 from GPRGNN import GPRGNN
 from datasets import Dataset
@@ -28,8 +28,8 @@ def get_args():
                                  'actor','cora','pubmed'])
 
     # model architecture
-    parser.add_argument('--model', type=str, default='my_model',
-                        choices=['SAF_GMP'])
+    parser.add_argument('--model', type=str, default='GSF_GNN',
+                        choices=['GSF_GNN'])
     parser.add_argument('--num_layers', type=int, default=3 )
     parser.add_argument('--hidden_dim', type=int, default=256)
     parser.add_argument('--hidden_dim_multiplier', type=float, default=1)
@@ -161,7 +161,7 @@ def main():
         l_x = l_x.unsqueeze(1).T
         dataset.node_features = torch.cat((dataset.node_features,l_x),0)
         #####
-        model = SAF_GMP(
+        model = GSF_GNN(
             input_dim=dataset.num_node_features,
             hidden_dim=args.hidden_dim,
             output_dim=dataset.num_targets,

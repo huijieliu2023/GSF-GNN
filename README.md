@@ -1,6 +1,6 @@
 # GSF-GNN
 
-Official implementation of [*Global structure-aware and feature-augmented graph neural network for heterophilic graphs*](https://dl.acm.org/doi/full/10.1145/3775057), published in *ACM Transactions on Information Systems*.
+Official implementation of [*Global structure-aware and feature-augmented graph neural network for heterophilic graphs*](https://dl.acm.org/doi/full/10.1145/3775057), published in **ACM Transactions on Information Systems**(TOIS, 2025).
 
 ![Overview of the GSF-GNN architecture](assets/gsf-gnn-overview.png)
 

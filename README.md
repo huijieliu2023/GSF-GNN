@@ -24,6 +24,18 @@ python train.py --dataset actor --device cuda --num-layers 2 --hidden-dim 64 --n
 
 Replace `actor` with another dataset filename in `data/` to train on it. Results are saved under `experiments/`.
 
+## Datasets
+
+Available values for `--dataset`:
+
+```text
+actor, amazon_ratings, chameleon, chameleon_directed,
+chameleon_filtered, chameleon_filtered_directed, citeseer, cora, cornell,
+minesweeper, pubmed, questions, roman_empire, squirrel, squirrel_directed,
+squirrel_filtered, squirrel_filtered_directed, texas, texas_4_classes,
+tolokers, wisconsin
+```
+
 ## Citation
 
 If you use this implementation, please cite the GSF-GNN paper:

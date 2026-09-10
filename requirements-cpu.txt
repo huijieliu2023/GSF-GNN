@@ -1,4 +1,0 @@
-# CPU-only alternative. Install this instead of requirements.txt on machines without CUDA.
-torch==2.7.0
-numpy==1.24.3
-tqdm==4.67.3

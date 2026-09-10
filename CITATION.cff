@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+message: "If you use GSF-GNN, please cite the associated paper."
+title: "GSF-GNN"
+authors:
+  - family-names: Liu
+    given-names: Huijie
+  - family-names: Ruan
+    given-names: Shulan
+  - family-names: Liu
+    given-names: Qi
+  - family-names: Cheng
+    given-names: Mingyue
+  - family-names: Huang
+    given-names: Zhenya
+  - family-names: Liu
+    given-names: Yu
+  - family-names: Chen
+    given-names: Enhong
+  - family-names: He
+    given-names: You
+preferred-citation:
+  type: article
+  title: "Global structure-aware and feature-augmented graph neural network for heterophilic graphs"
+  authors:
+    - family-names: Liu
+      given-names: Huijie
+    - family-names: Ruan
+      given-names: Shulan
+    - family-names: Liu
+      given-names: Qi
+    - family-names: Cheng
+      given-names: Mingyue
+    - family-names: Huang
+      given-names: Zhenya
+    - family-names: Liu
+      given-names: Yu
+    - family-names: Chen
+      given-names: Enhong
+    - family-names: He
+      given-names: You
+  journal: "ACM Transactions on Information Systems"
+  volume: 44
+  issue: 2
+  pages: "1-28"
+  year: 2025
+  publisher:
+    name: "ACM"

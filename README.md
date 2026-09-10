@@ -1,40 +1,84 @@
 # GSF-GNN
 
-Codes for "GSF-GNN: A Structure-aware and Feature-augmented Graph Neural Network for Heterophilic Graphs"
+Standalone, native-PyTorch implementation of GSF-GNN for node classification on heterophilic graphs. It contains the GSF-GNN model and its training/verification pipeline only; comparison baselines were deliberately excluded.
 
-## Statistics of the Node Classification Datasets
+![Overview of the GSF-GNN architecture](assets/gsf-gnn-overview.png)
 
-|                 | **Actor** | **Roman** | **Amazon** | **Minesweeper** | **Tolokers** | **Cora** | **Pubmed** |
-|-----------------|-----------|-----------|------------|-----------------|--------------|----------|------------|
-| **#Nodes**      | 7,600     | 22,662    | 24,492     | 10,000          | 11,758       | 2,708    | 19,717     |
-| **#Edges**      | 26,659    | 32,927    | 93,050     | 39,402          | 519,000      | 5,278    | 44,324     |
-| **#Features**   | 931       | 300       | 300        | 7               | 10           | 1,433    |  500       |
-| **#Classes**    | 5         | 18        | 5          | 2               | 2            | 7        | 3          |
-| **h_edge**| 0.22      | 0.05      | 0.38       | 0.68            | 0.59         | 0.81     | 0.80       |
-| **LI**          | 0.00      | 0.11      | 0.04       | 0.00            | 0.01         | 0.59     | 0.41       |
+*GSF-GNN combines structure-based global propagation with a feature-augmented compensatory update. Figure adapted from the associated paper.*
 
+## What is included
 
+- Native PyTorch graph propagation; DGL, PyTorch Geometric, compiled CUDA extensions, and graph-framework packages are not required.
+- The 21 migrated NPZ datasets in `data/`. See [DATASETS.md](DATASETS.md) for exact filenames, expected fields, and integrity checking.
+- A no-download smoke test, a dataset validator, and a configurable training entry point.
 
-## Performance of GMP-GNN and Other Popular GNN Models on Both Heterophily and Homophily Graph Datasets
+Each dataset file contains `node_features`, `node_labels`, `edges`, `train_masks`, `val_masks`, and `test_masks`.
 
-| **Model**      | **Actor**                   | **Roman**             | **Amazon**            | **Minesweeper**        | **Tolokers**          | **Cora**             | **Pubmed**            |
-|-----------------|----------------------------|-----------------------|-----------------------|------------------------|-----------------------|-----------------------|-----------------------|
-| GCN            | 34.96±1.10                 | 73.69±0.74           | 48.70±0.63           | 89.75±0.52            | 83.64±0.67           | 86.60±0.95           | 88.18±0.50           |
-| GraphSage      | 35.68±0.72                 | 85.74±0.67           | 53.63±0.39           | 93.51±0.57            | 82.43±0.44           | 86.66±1.42           | 88.83±0.50           |
-| GAT            | 34.82±1.17                 | 80.87±0.30           | 49.09±0.63           | 92.01±0.68            | 83.70±0.47           | 86.80±1.02           | 87.82±0.43           |
-| GATv2          | 35.66±0.70                 | 85.69±0.57           | 49.71±0.68           | 91.53±0.66            | 82.93±0.62           | 86.73±1.15           | 87.81±0.52           |
-| H2GCN          | 35.09±1.00                 | 60.11±0.52           | 36.47±0.23           | 89.71±0.31            | 73.35±0.01           | 87.12±0.81           | 88.53±0.42           |
-| GBK-GNN        | 34.38±0.67                 | 74.57±0.47           | 45.98±0.71           | 90.85±0.58            | 81.01±0.67           | 86.74±0.74           | 88.79±0.53           |
-| GCNII          | 34.88±0.85                 | 79.33±0.56           | 49.70±0.68           | 89.64±1.18            | 84.89±0.54           | 86.12±0.88           | 88.80±0.43           |
-| FSGNN          | 35.21±0.66                 | 79.92±0.56           | 52.74±0.83           | 90.08±0.70            | 82.76±0.61           | 85.49±1.15           | 89.31±0.37           |
-| OrderedGNN     | 36.01±1.13                 | 81.92±0.79           | 52.35±0.55           | 90.13±1.77            | 81.85±0.87           | 86.96±1.44           | 89.07±0.52           |
-| GPR-GNN        | 34.70±0.86                 | 64.85±0.27           | 44.88±0.34           | 86.24±0.61            | 72.94±0.97           | 87.63±1.59           | 88.58±0.48           |
-| FAGCN          | 34.95±1.36                 | 65.22±0.56           | 44.12±0.30           | 88.17±0.73            | 77.75±1.05           | 87.89±0.85           | 89.32±0.28           |
-| JacobiConv     | 35.54±0.85                 | 71.14±0.42           | 43.55±0.48           | 89.66±0.40            | 68.66±0.65           | 86.76±0.98           | 89.02±0.39           |
-| ALT-APPNP      | 32.41±1.27                 | 69.13±0.43           | 43.81±0.37           | 80.19±0.26            | 78.60±0.62           | 85.01±0.86           | 89.06±0.48           |
-| GT             | 33.86±1.04                 | 86.51±0.73           | 51.17±0.66           | 91.85±0.76            | 83.23±0.64           | 86.76±1.30           | 87.17±0.58           |
-| GraphGPS       | 36.53±0.68                 | 87.04±0.58           | 51.03±0.60           | 93.85±0.41            | 84.81±0.86           | 86.56±1.01           | 88.94±0.57           |
-| GloGNN++       | 35.42±0.76                 | 59.63±0.69           | 36.89±0.14           | 51.08±1.23            | 73.39±1.17           | **88.33±1.09**       | 89.24±0.39           |
-| LRGNN          | 36.86±0.86                 | 62.29±1.33           | 36.79±0.49           | 80.00±0.00            | 78.51±0.38           | 88.26±1.02           | 89.26±0.62           |
-| **GSF-GNN**    | **37.04±0.80**             | **90.21±0.62**       | **53.72±0.41**       | **96.32±0.42**        | **85.11±0.64**       | 87.53±1.32           | **89.72±0.37**       |
+## Installation
 
+The verified environment is Windows, Python 3.10, PyTorch 2.7.0+cu128, NumPy 1.24.3, and tqdm 4.67.3 (tested on an RTX 5090).
+
+```bash
+git clone <YOUR_REPOSITORY_URL>
+cd GSF-GNN
+python -m pip install -r requirements.txt
+```
+
+`requirements.txt` installs the CUDA 12.8 PyTorch build. For a CPU-only machine, install `requirements-cpu.txt` instead. `requirements-dev.txt` adds test/lint tools; `environment.yml` is the equivalent Conda entry point.
+
+## Verify the checkout
+
+```bash
+python smoke_test.py
+python verify.py
+python train.py --dataset synthetic --device cpu --num-steps 2 --num-layers 1 --hidden-dim 8 --num-heads 2
+```
+
+`smoke_test.py` checks forward and backward passes without data downloads. `verify.py` validates every bundled NPZ file before training.
+
+## Train
+
+Short GPU run on Actor:
+
+```bash
+python train.py --dataset actor --device cuda --num-layers 2 --hidden-dim 64 --num-heads 8 --num-steps 200 --seed 42
+```
+
+Standard ten-run Actor command:
+
+```bash
+python train.py --dataset actor --device cuda --num-layers 2 --hidden-dim 64 --num-heads 8 --num-steps 200 --num-runs 10 --seed 42 --output-dir experiments/actor-10runs
+```
+
+The command selects the validation-best evaluation from each split and writes a JSON summary to `<output-dir>/<dataset>_results.json`. On the verified machine, the ten-run Actor command produced `0.3711 ± 0.0077` test accuracy (mean ± population standard deviation). Exact values may vary with PyTorch, CUDA, and GPU kernels.
+
+`--device auto` uses CUDA when available. Avoid CPU for large datasets: GSF-GNN constructs a dense node-similarity matrix with O(N²) memory. Use `--disable-filters`, `--disable-combinations`, and `--no-global-node` for the three ablations.
+
+## Reproducibility
+
+`--seed` controls Python, NumPy, and PyTorch RNGs. Multi-run experiments use `seed + run_index` and rotate through the dataset’s supplied train/validation/test masks. Saved JSON records every selected step, validation score, and test score.
+
+## Citation
+
+If you use this implementation, please cite the GSF-GNN paper:
+
+```bibtex
+@article{liu2025global,
+  title={Global structure-aware and feature-augmented graph neural network for heterophilic graphs},
+  author={Liu, Huijie and Ruan, Shulan and Liu, Qi and Cheng, Mingyue and Huang, Zhenya and Liu, Yu and Chen, Enhong and He, You},
+  journal={ACM Transactions on Information Systems},
+  volume={44},
+  number={2},
+  pages={1--28},
+  year={2025},
+  publisher={ACM New York, NY}
+}
+```
+
+Machine-readable citation metadata is provided in [CITATION.cff](CITATION.cff).
+
+## Release and data notice
+
+The implementation was cleaned from the supplied local research codebase. Dataset archives are redistributed as provided and retain their original provenance; check [DATASETS.md](DATASETS.md) and the upstream dataset terms before redistribution or commercial use.
+
+The supplied local codebase contains a Yandex Research MIT notice, but the upstream GSF-GNN repository does not clearly license this cleaned standalone implementation. Do not attach a new code license or publish it as an open-source release until the relevant rights holder confirms the intended license.

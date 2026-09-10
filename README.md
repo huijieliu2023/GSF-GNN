@@ -1,6 +1,6 @@
 # GSF-GNN
 
-Standalone, native-PyTorch implementation of GSF-GNN for node classification on heterophilic graphs. It contains the GSF-GNN model and its training/verification pipeline only; comparison baselines were deliberately excluded.
+Implementation for the paper [*Global structure-aware and feature-augmented graph neural network for heterophilic graphs*](https://dl.acm.org/doi/full/10.1145/3775057), published in *ACM Transactions on Information Systems*.
 
 ![Overview of the GSF-GNN architecture](assets/gsf-gnn-overview.png)
 
